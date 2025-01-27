@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Binayak Automobiles - Staff Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+</head>
+<body class="bg-gray-100">
+    <!-- Login Section -->
+    <div id="loginSection" class="min-h-screen flex items-center justify-center">
+        <div class="bg-white p-8 rounded-lg shadow-lg w-96">
+            <h1 class="text-2xl font-bold text-center mb-6">Binayak Automobiles</h1>
+            <form id="loginForm" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium">Username</label>
+                    <input type="text" id="username" class="w-full p-2 border rounded">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium">Password</label>
+                    <input type="password" id="password" class="w-full p-2 border rounded">
+                </div>
+                <button type="submit" class="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700">Login</button>
+                <p class="text-center">
+                    <a href="#" id="showRegister" class="text-blue-600">Create Account</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Registration Section -->
+    <div id="registerSection" class="min-h-screen flex items-center justify-center hidden">
+        <div class="bg-white p-8 rounded-lg shadow-lg w-96">
+            <h1 class="text-2xl font-bold text-center mb-6">Create Account</h1>
+            <form id="registerForm" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium">Username</label>
+                    <input type="text" class="w-full p-2 border rounded">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium">Password</label>
+                    <input type="password" class="w-full p-2 border rounded">
+                </div>
+                <button type="submit" class="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700">Register</button>
+                <p class="text-center">
+                    <a href="#" id="showLogin" class="text-blue-600">Back to Login</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main Dashboard -->
+    <div id="dashboard" class="hidden">
+        <nav class="bg-blue-600 text-white p-4">
+            <div class="container mx-auto flex justify-between items-center">
+                <h1 class="text-xl font-bold">Binayak Automobiles</h1>
+                <button id="logoutBtn" class="bg-red-500 px-4 py-2 rounded">Logout</button>
+            </div>
+        </nav>
+
+        <div class="container mx-auto p-4">
+            <!-- Employee Management Section -->
+            <div class="grid md:grid-cols-2 gap-4 mb-8">
+                <div class="bg-white p-4 rounded-lg shadow">
+                    <h2 class="text-xl font-bold mb-4">Add Employee</h2>
+                    <form id="employeeForm" class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium">Name</label>
+                            <input type="text" name="name" class="w-full p-2 border rounded">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium">Section</label>
+                            <select name="section" class="w-full p-2 border rounded">
+                                <option value="gm">GM</option>
+                                <option value="accountant">Accountant</option>
+                                <option value="supervisor">Supervisor</option>
+                                <option value="sales">Sales</option>
+                                <option value="billing">Billing</option>
+                                <option value="counter">Counter</option>
+                                <option value="mechanic">Mechanic</option>
+                                <option value="helper">Helper</option>
+                                <option value="driver">Driver</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium">Salary</label>
+                            <input type="number" name="salary" class="w-full p-2 border rounded">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium">WhatsApp Number</label>
+                            <input type="tel" name="whatsapp" class="w-full p-2 border rounded">
+                        </div>
+                        <button type="submit" class="bg-blue-600 text-white p-2 rounded hover:bg-blue-700 w-full">Add Employee</button>
+                    </form>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg shadow">
+                    <h2 class="text-xl font-bold mb-4">Salary Management</h2>
+                    <form id="salaryForm" class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium">Employee</label>
+                            <select name="employee" id="employeeSelect" class="w-full p-2 border rounded"></select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium">Month</label>
+                            <input type="month" name="month" class="w-full p-2 border rounded">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium">Advance Payment</label>
+                            <input type="number" name="advance" class="w-full p-2 border rounded">
+                        </div>
+                        <button type="submit" class="bg-green-600 text-white p-2 rounded hover:bg-green-700 w-full">Record Payment</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Reports Section -->
+            <div class="bg-white p-4 rounded-lg shadow mb-8">
+                <h2 class="text-xl font-bold mb-4">Reports</h2>
+                <div class="grid md:grid-cols-3 gap-4">
+                    <button id="exportMonthly" class="bg-blue-600 text-white p-2 rounded hover:bg-blue-700">Export Monthly Report</button>
+                    <button id="exportYearly" class="bg-blue-600 text-white p-2 rounded hover:bg-blue-700">Export Yearly Report</button>
+                    <button id="sendStatements" class="bg-green-600 text-white p-2 rounded hover:bg-green-700">Send Statements to WhatsApp</button>
+                </div>
+            </div>
+
+            <!-- Employee List -->
+            <div class="bg-white p-4 rounded-lg shadow">
+                <h2 class="text-xl font-bold mb-4">Employee List</h2>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full" id="employeeTable">
+                        <thead>
+                            <tr class="bg-gray-100">
+                                <th class="p-2">Name</th>
+                                <th class="p-2">Section</th>
+                                <th class="p-2">Salary</th>
+                                <th class="p-2">WhatsApp</th>
+                                <th class="p-2">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Login functionality
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            if (username === 'Binayak' && password === 'Binayak@7986') {
+                document.getElementById('loginSection').classList.add('hidden');
+                document.getElementById('dashboard').classList.remove('hidden');
+            } else {
+                alert('Invalid credentials!');
+            }
+        });
+
+        // Toggle registration form
+        document.getElementById('showRegister').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('loginSection').classList.add('hidden');
+            document.getElementById('registerSection').classList.remove('hidden');
+        });
+
+        document.getElementById('showLogin').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('registerSection').classList.add('hidden');
+            document.getElementById('loginSection').classList.remove('hidden');
+        });
+
+        // Logout functionality
+        document.getElementById('logoutBtn').addEventListener('click', function() {
+            document.getElementById('dashboard').classList.add('hidden');
+            document.getElementById('loginSection').classList.remove('hidden');
+        });
+
+        // Store employees data
+        let employees = [];
+
+        // Add employee
+        document.getElementById('employeeForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const employee = {
+                id: Date.now(),
+                name: formData.get('name'),
+                section: formData.get('section'),
+                salary: formData.get('salary'),
+                whatsapp: formData.get('whatsapp')
+            };
+            employees.push(employee);
+            updateEmployeeTable();
+            updateEmployeeSelect();
+            e.target.reset();
+        });
+
+        // Update employee table
+        function updateEmployeeTable() {
+            const tbody = document.querySelector('#employeeTable tbody');
+            tbody.innerHTML = '';
+            employees.forEach(emp => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="p-2">${emp.name}</td>
+                    <td class="p-2">${emp.section}</td>
+                    <td class="p-2">${emp.salary}</td>
+                    <td class="p-2">${emp.whatsapp}</td>
+                    <td class="p-2">
+                        <button onclick="deleteEmployee(${emp.id})" class="bg-red-500 text-white px-2 py-1 rounded">Delete</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Update employee select dropdown
+        function updateEmployeeSelect() {
+            const select = document.getElementById('employeeSelect');
+            select.innerHTML = '<option value="">Select Employee</option>';
+            employees.forEach(emp => {
+                select.innerHTML += `<option value="${emp.id}">${emp.name} - ${emp.section}</option>`;
+            });
+        }
+
+        // Delete employee
+        function deleteEmployee(id) {
+            employees = employees.filter(emp => emp.id !== id);
+            updateEmployeeTable();
+            updateEmployeeSelect();
+        }
+
+        // Export to PDF functionality
+        document.getElementById('exportMonthly').addEventListener('click', function() {
+            // Implementation would use jsPDF to generate PDF
+            alert('Monthly report exported!');
+        });
+
+        document.getElementById('exportYearly').addEventListener('click', function() {
+            // Implementation would use jsPDF to generate PDF
+            alert('Yearly report exported!');
+        });
+
+        // Send WhatsApp statements
+        document.getElementById('sendStatements').addEventListener('click', function() {
+            employees.forEach(emp => {
+                const message = `Monthly statement for ${emp.name}`;
+                const url = `https://wa.me/${emp.whatsapp}?text=${encodeURIComponent(message)}`;
+                window.open(url, '_blank');
+            });
+        });
+
+        // Salary management
+        document.getElementById('salaryForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            // Implementation would store salary data
+            alert('Salary record added!');
+            e.target.reset();
+        });
+    </script>
+<script>document.body.addEventListener('wheel', e => { if (!e.ctrlKey) return; e.preventDefault(); return }, { passive: false })</script>
+	</body>
+</html>
